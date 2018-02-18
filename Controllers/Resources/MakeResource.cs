@@ -1,18 +1,16 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace carApp.Controllers.Resources
+namespace vega.Controllers.Resources
 {
-    public class MakeResource
+    public class MakeResource : KeyValuePairResource
     {
-         public int Id { get; set; }
-        public string Name { get; set; }
-        public ICollection<ModelResource>  Models { get; set; }
+        public ICollection<KeyValuePairResource> Models { get; set; }
 
         public MakeResource()
         {
-            Models = new Collection<ModelResource>();
-            
+            Models = new Collection<KeyValuePairResource>();
         }
+        
     }
 }

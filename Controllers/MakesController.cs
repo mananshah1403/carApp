@@ -1,30 +1,30 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using carApp.Controllers.Resources;
-using carApp.Models;
-using carApp.persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using vega.Controllers.Resources;
+using vega.Core.Models;
+using vega.Persistence;
 
-namespace carApp.Controllers
+namespace vega.Controllers
 {
-    public class MakesController : Controller
+  public class MakesController : Controller
+  {
+    private readonly VegaDbContext context;
+    private readonly IMapper mapper;
+    public MakesController(VegaDbContext context, IMapper mapper)
     {
-        private readonly CarDbContext context;
-        private readonly IMapper mapper;
-        public MakesController(CarDbContext context, IMapper mapper)
-        {
-            this.mapper = mapper;
-            this.context = context;
-
-        }
-        [HttpGet("/api/makes")]
-        public async Task<IEnumerable<MakeResource>> GetMakes()
-        {
-            var makes = await context.Makes.Include(m => m.Models).ToListAsync();
-
-            return mapper.Map<List<Make>, List<MakeResource>>(makes);
-        }
+      this.mapper = mapper;
+      this.context = context;
     }
+
+    [HttpGet("/api/makes")]
+    public async Task<IEnumerable<MakeResource>> GetMakes()
+    {
+        var makes = await context.Makes.Include(m => m.Models).ToListAsync();
+
+        return mapper.Map<List<Make>, List<MakeResource>>(makes);
+    }
+  }
 }
